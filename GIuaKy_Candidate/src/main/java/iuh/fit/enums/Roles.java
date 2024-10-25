@@ -1,10 +1,10 @@
 package iuh.fit.enums;
 
 public enum Roles {
-    ADMINISTRATION((byte) 1),
-    STAFF ((byte) 2),
-    MANAGER((byte) 3),
-    EXECUTIVE((byte) 4);
+    ADMINISTRATION((byte) 0),
+    STAFF((byte) 1),
+    MANAGER((byte) 2),
+    EXECUTIVE((byte) 3);
 
     private final byte value;
 
@@ -14,5 +14,14 @@ public enum Roles {
 
     public byte getValue() {
         return value;
+    }
+
+    public static Roles fromByte(byte value) {
+        for (Roles role : Roles.values()) {
+            if (role.getValue() == value) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException("Invalid role value: " + value);
     }
 }

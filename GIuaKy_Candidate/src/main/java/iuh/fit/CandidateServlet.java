@@ -7,17 +7,17 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-import iuh.fit.dao.candidateDao;
-import iuh.fit.dao.experienceDao;
+import iuh.fit.dao.CandidateDao;
+import iuh.fit.dao.ExperienceDao;
 
 @WebServlet(name = "helloServlet", value = "/controller")
-public class HelloServlet extends HttpServlet {
+public class CandidateServlet extends HttpServlet {
 
     @EJB
-    private candidateDao candidateDao;
+    private CandidateDao candidateDao;
 
     @EJB
-    private experienceDao experienceDao;
+    private ExperienceDao experienceDao;
 
     RequestDispatcher dispatcher;
 
@@ -47,10 +47,11 @@ public class HelloServlet extends HttpServlet {
                             request.setAttribute("listCandidate", candidateDao.getALlCandidate());
                         } else {
                             Byte role = Byte.parseByte(roleParam);
-                            if (candidateDao.getCandidateByRole(role).size() == 0) {
-                                request.getRequestDispatcher("report1.jsp").forward(request, response);
-                            } else {
+                            if (candidateDao.getCandidateByRole(role).size() != 0 || role == 0) {
                                 request.setAttribute("listCandidate", candidateDao.getCandidateByRole(role));
+
+                            } else {
+                                request.getRequestDispatcher("report1.jsp").forward(request, response);
                             }
                         }
                         request.getRequestDispatcher("report1.jsp").forward(request, response);

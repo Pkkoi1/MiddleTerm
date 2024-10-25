@@ -2,24 +2,20 @@ package iuh.fit.dao;
 
 import iuh.fit.enums.Roles;
 import iuh.fit.models.Candidate;
-import iuh.fit.models.Experience;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jakarta.transaction.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Stateless
-public class candidateDao {
+public class CandidateDao {
     EntityManager em;
 
-    public candidateDao() {
+    public CandidateDao() {
         em = Persistence.createEntityManagerFactory("MariaBD").createEntityManager();
     }
 
@@ -36,9 +32,9 @@ public class candidateDao {
 
     @Transactional
     public List<Candidate> getCandidateByRole(Byte role) {
-        Roles roleEnum = Roles.values()[role];
+        Roles roles = Roles.values()[role];
         return em.createQuery("SELECT c FROM Candidate c JOIN c.experiences e WHERE e.role = :role", Candidate.class)
-                .setParameter("role", roleEnum)
+                .setParameter("role", roles)
                 .getResultStream()
                 .collect(Collectors.toList());
     }

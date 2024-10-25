@@ -31,7 +31,7 @@ public class Candidate {
     @Column(name = "phone")
     private String phone;
 
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "candidate")
     private List<Experience> experiences;
 
     public Candidate(String fullName, String email, String phone) {

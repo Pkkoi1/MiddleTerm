@@ -1,26 +1,26 @@
-package iuh.fit.dao;
+package iuh.fit.giuaKy_xe.dao;
 
-import iuh.fit.models.Experience;
+import iuh.fit.giuaKy_xe.models.Loaixe;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
 @Stateless
-public class ExperienceDao {
+public class QuanLyLoaiXeDao {
     EntityManager em;
     EntityTransaction et;
 
-    public ExperienceDao() {
+    public QuanLyLoaiXeDao() {
         em = Persistence.createEntityManagerFactory("MariaBD").createEntityManager();
         et = em.getTransaction();
     }
 
-    public List<Experience> getAllExpByCanId(Long canId) {
-        return em.createQuery("SELECT e FROM Experience e WHERE e.candidate.id = :canId", Experience.class)
-                .setParameter("canId", canId)
-                .getResultList();
+    @Transactional
+    public List<Loaixe> getAllLoaiXe() {
+        return em.createQuery("SELECT lx FROM Loaixe lx", Loaixe.class).getResultList();
     }
 }
